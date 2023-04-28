@@ -154,8 +154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clockPrefab: {fileID: 1202595374924526958, guid: afaec7237eef473489fc264ac523003f, type: 3}
-  _numberOfClocks: 3
+  _numberOfClocks: 1
   _audioClip: {fileID: 8300000, guid: b74cf3faa5dd7604eac62b0763464eb4, type: 3}
+  _area1D: 0
 --- !u!4 &23829648
 Transform:
   m_ObjectHideFlags: 0
