@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Clock : MonoBehaviour
 {
@@ -15,21 +16,44 @@ public class Clock : MonoBehaviour
 	
 	private UnityEvent _crossoverEvent = new UnityEvent();
 	private bool _crossoverInvoked = false;
+
+	[SerializeField] private Vector3 _hourHandScale;
+	[SerializeField] private Vector3 _minuteHandScale;
+	[SerializeField] private ClockHand[] _handPrefabs;
+	[SerializeField] private Color[] _colours;
 	
-	void Start()
+	private void Start()
 	{
+		CreateHands();
+		
 		_crossoverEvent.AddListener(OnCrossOver);
 		SetHands(DateTime.Now);
 	}
 
-	void Update()
+	private void Update()
 	{
 		SetHands(DateTime.Now);
 	}
 
-	void SetHands(DateTime time)
+	private void CreateHands()
 	{
-		time = time.AddHours(1);
+		int hourHand = Random.Range(0, _handPrefabs.Length);
+		int hourColour = Random.Range(0, _colours.Length);
+		ClockHand hour = Instantiate(_handPrefabs[hourHand], _hourPivot);
+		hour.SetColour(_colours[hourColour]);
+		hour.transform.localScale = _hourHandScale;
+		hour.transform.localPosition = new Vector3(0, 0, -0.1f);
+		
+		int minuteHand = Random.Range(0, _handPrefabs.Length);
+		int minuteColour = Random.Range(0, _colours.Length);
+		ClockHand minute = Instantiate(_handPrefabs[minuteHand], _minutePivot);
+		minute.SetColour(_colours[minuteColour]);
+		minute.transform.localScale = _minuteHandScale;
+		minute.transform.localPosition = new Vector3(0, 0, -0.15f);
+	}
+
+	private void SetHands(DateTime time)
+	{
 		float degHour = _degPerHour * time.Hour + _degPerHour / _minutePerHour * time.Minute;
 		float degMinute = (_degPerMinute * time.Minute) + (_degPerMinute / _secondPerMinute) * time.Second ;
 		

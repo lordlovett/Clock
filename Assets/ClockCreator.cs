@@ -11,8 +11,7 @@ public class ClockCreator : MonoBehaviour
 	[SerializeField] private AudioClip _audioClip;
 
 	private int ClockCount => (int)_numberOfClocks;
-
-	[SerializeField]
+	
 	private int _area1D;
 	private Vector3 _offset = Vector3.zero;
 
